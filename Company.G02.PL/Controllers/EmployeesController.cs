@@ -1,25 +1,23 @@
 ﻿using Company.G02.BLL.Interfaces;
-using Company.G02.BLL.Repositories;
 using Company.G02.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.G02.PL.Controllers
 {
-    public class DepartmentsController : Controller
+    public class EmployeesController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepository;   // NULL
+        private readonly IEmployeeRepository _employeeRepository;
 
-
-        public DepartmentsController(IDepartmentRepository departmentRepository) // ASK the CLR to Create Object From DepartmentRepositroy
+        public EmployeesController(IEmployeeRepository employeeRepository) // ASK the CLR to Create Object From employeeRepository
         {
-            _departmentRepository = departmentRepository;
+            _employeeRepository = employeeRepository;
         }
-
+        
         [HttpGet]
         public IActionResult Index()
         {
-            var departments = _departmentRepository.GetAll();
-            return View(departments);
+            var employees = _employeeRepository.GetAll();
+            return View(employees);
         }
 
         [HttpGet]
@@ -33,11 +31,11 @@ namespace Company.G02.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] // Prevent any Request Outside My Application from Any Tool Or Any Outside Application
-        public IActionResult Create(Department model)  /// Returning the view if has no Data = Stay in the same page
+        public IActionResult Create(Employee model)  /// Returning the view if has no Data = Stay in the same page
         {
             if (ModelState.IsValid) // Server Side Validation
             {
-                var count = _departmentRepository.Add(model);
+                var count = _employeeRepository.Add(model);
                 if (count > 0)
                 {
                     return RedirectToAction(nameof(Index));
@@ -54,11 +52,11 @@ namespace Company.G02.PL.Controllers
         {
             if (id is null) return BadRequest(); // 400
 
-            var department = _departmentRepository.Get(id.Value);
+            var employee = _employeeRepository.Get(id.Value);
 
-            if (department == null) return NotFound(); // 404
+            if (employee == null) return NotFound(); // 404
 
-            return View(viewName,department);
+            return View(viewName, employee);
 
         }
 
@@ -68,21 +66,14 @@ namespace Company.G02.PL.Controllers
         [HttpGet]
         public IActionResult Edit(int? id) // 100
         {
-            //if (id is null) return BadRequest(); // 400
 
-            //var department = _departmentRepository.Get(id.Value);
-
-            //if (department == null) return NotFound(); // 404
-
-            //return View(department);
-            
             return Details(id, "Edit");
         }
 
         // Posting the Updated Id
         [HttpPost]
         [ValidateAntiForgeryToken] // Prevent any Request Outside My Application from Any Tool Or Any Outside Application
-        public IActionResult Edit([FromRoute] int? id, Department model) // 100
+        public IActionResult Edit([FromRoute] int? id, Employee model) // 100
         {
             try
             {
@@ -90,7 +81,7 @@ namespace Company.G02.PL.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var count = _departmentRepository.Update(model);
+                    var count = _employeeRepository.Update(model);
                     if (count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -111,15 +102,9 @@ namespace Company.G02.PL.Controllers
         //------------------Delete ------------------//
 
         [HttpGet]
-         public IActionResult Delete(int? id) // 100
-         {
-            //if (id is null) return BadRequest(); // 400
-
-            //var department = _departmentRepository.Get(id.Value);
-
-            //if (department == null) return NotFound(); // 404
-
-            //return View(department);
+        public IActionResult Delete(int? id) // 100
+        {
+            
 
             return Details(id, "Delete");
 
@@ -129,7 +114,7 @@ namespace Company.G02.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] // Prevent any Request Outside My Application from Any Tool Or Any Outside Application
-        public IActionResult Delete([FromRoute] int? id, Department model) // 100
+        public IActionResult Delete([FromRoute] int? id, Employee model) // 100
         {
             try
             {
@@ -137,7 +122,7 @@ namespace Company.G02.PL.Controllers
 
                 if (ModelState.IsValid) // Server Side Validation
                 {
-                    var count = _departmentRepository.Delete(model);
+                    var count = _employeeRepository.Delete(model);
                     if (count > 0)
                     {
                         return RedirectToAction(nameof(Index));
@@ -145,7 +130,7 @@ namespace Company.G02.PL.Controllers
                 }
             }
             catch (Exception Ex)
-            {   
+            {
                 //1. Log Exeption
                 //2. Friendly Message
                 ModelState.AddModelError(string.Empty, Ex.Message);
@@ -153,18 +138,6 @@ namespace Company.G02.PL.Controllers
             return View(model);
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

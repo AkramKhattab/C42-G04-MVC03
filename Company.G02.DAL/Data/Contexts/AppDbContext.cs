@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Company.G02.DAL.Data.Contexts
 {
+    // CLR RunTime
     public class AppDbContext : DbContext
     {
 
@@ -35,6 +36,7 @@ namespace Company.G02.DAL.Data.Contexts
 
 
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
     }
 }

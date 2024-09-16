@@ -10,45 +10,45 @@ using System.Threading.Tasks;
 namespace Company.G02.BLL.Repositories
 {
     // CLR
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : GenericRepository<Department>,  IDepartmentRepository
     {
-        private readonly AppDbContext _context; // NULL
+        //private readonly AppDbContext _context; // NULL
 
 
-        public DepartmentRepository(AppDbContext context) // ASK the CLR to Create Object From AppDbContext
+        public DepartmentRepository(AppDbContext context) : base(context) // ASK the CLR to Create Object From AppDbContext
         {
-            _context = context;
+            //_context = context;
         }
 
-        public IEnumerable<Department> GetAll()
-        {
-           return _context.Departments.ToList();
-        }
-        public Department Get(int id)
-        {
-           //return _context.Departments.FirstOrDefault(D => D.Id == id);
-            return _context.Departments.Find(id);
-        }
+        //public IEnumerable<Department> GetAll()
+        //{
+        //   return _context.Departments.ToList();
+        //}
+        //public Department Get(int id)
+        //{
+        //   //return _context.Departments.FirstOrDefault(D => D.Id == id);
+        //    return _context.Departments.Find(id);
+        //}
 
-        public int Add(Department entity)
-        {
-            _context.Departments.Add(entity);
-            return _context.SaveChanges();
-        }
+        //public int Add(Department entity)
+        //{
+        //    _context.Departments.Add(entity);
+        //    return _context.SaveChanges();
+        //}
 
-        public int Update(Department entity)
-        {
-            _context.Departments.Update(entity);
-            return _context.SaveChanges();
+        //public int Update(Department entity)
+        //{
+        //    _context.Departments.Update(entity);
+        //    return _context.SaveChanges();
 
-        }
+        //}
 
-        public int Delete(Department entity)
-        {
-            _context.Departments.Remove(entity);
-            return _context.SaveChanges();
+        //public int Delete(Department entity)
+        //{
+        //    _context.Departments.Remove(entity);
+        //    return _context.SaveChanges();
 
-        }
+        //}
 
 
 

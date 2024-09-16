@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>All Department</h1>
+<h1>All Departments</h1>
 <br />
 <br />
 
@@ -32,9 +32,9 @@
                 <td>@department.Code</td>
                 <td>@department.Name</td>
                 <td>@department.DateOfCreation</td>
-                <td><a asp-action="Details" asp-route-id="@department.Id" class="btn btn-warning">Details</a></td>
-                <td><a asp-action="Edit" asp-route-id="@department.Id" class="btn btn-success">Update</a></td>
-                <td><a asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">Delete</a></td>
+
+                    <partial name="_ButtonPartialView" model="@department.Id" />
+
             </tr>     
         }
     </tbody>
@@ -43,6 +43,6 @@
 else
 {
     <div class="alert alert-danger">
-        <h4>There Are No Departments</h4>
+        <h4>There Are No Departments :(</h4>
     </div>
 }
